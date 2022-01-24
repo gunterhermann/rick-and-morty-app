@@ -1,5 +1,5 @@
 <template>
-  <v-card color="blue-grey darken-4">
+  <v-card color="blue-grey darken-4" height="100%">
     <Search />
 
     <v-container fluid>

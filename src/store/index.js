@@ -166,6 +166,7 @@ const mutations = {
   },
   [SET_ERROR](state, error) {
     state.error = error;
+    state.isLoading = false;
   },
   [SET_CHARACTER_LIST](state, characterList) {
     state.charactersCount = characterList.info.count;
