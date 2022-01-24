@@ -4,7 +4,7 @@ The web application was created in Vue 2 with Vuetify. It uses the [Rick and Mor
 
 ## Demo
 
-A demo of the web app can be seen [here](admiring-ritchie-da3b49.netlify.app).
+A demo of the web app can be seen [here](https://admiring-ritchie-da3b49.netlify.app/).
 
 ## Project setup
 
