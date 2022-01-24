@@ -2,6 +2,10 @@
 
 The web application was created in Vue 2 with Vuetify. It uses the [Rick and Morty GraphQL API](https://rickandmortyapi.com/documentation/) to access the characters, locations, and episodes of the television show [Rick and Morty](https://www.adultswim.com/videos/rick-and-morty).
 
+## Demo
+
+A demo of the web app can be seen [here](admiring-ritchie-da3b49.netlify.app).
+
 ## Project setup
 
 ```
