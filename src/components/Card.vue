@@ -10,7 +10,7 @@
         :class="{ 'on-hover': hover }"
         @click="
           isDialog = true;
-          getCharacter(character.id);
+          queryCharacter(character.id);
         "
       >
         <v-img :src="character.image" height="250" contain></v-img>
@@ -54,7 +54,7 @@ export default {
     ...mapGetters(["statusSelection"]),
   },
   methods: {
-    getCharacter(id) {
+    queryCharacter(id) {
       this.$store.dispatch(FETCH_CHARACTER, {
         id: id,
       });

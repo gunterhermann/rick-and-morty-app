@@ -1,10 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import gql from "graphql-tag";
-import { FETCH_CHARACTER, FETCH_CHARACTER_LIST } from "./actions.type";
+import {
+  FETCH_CHARACTER,
+  FETCH_CHARACTER_LIST,
+  FETCH_CHARACTER_NAMES,
+} from "./actions.type";
 import {
   FETCH_START,
   SET_CHARACTER_LIST,
+  SET_CHARACTER_NAMES,
   SET_CHARACTER,
   SET_SEARCH_PARAMS,
   SET_ERROR,
@@ -18,6 +23,7 @@ Vue.use(Vuex);
 const state = {
   characterList: [],
   character: [],
+  characterNames: [],
   searchParams: {
     page: null,
     name: null,
@@ -44,6 +50,9 @@ const state = {
 const getters = {
   characterList(state) {
     return state.characterList;
+  },
+  characterNames(state) {
+    return state.characterNames;
   },
   character(state) {
     return state.character;
@@ -153,6 +162,42 @@ const actions = {
         commit(SET_ERROR, error);
       });
   },
+  async [FETCH_CHARACTER_NAMES]({ commit }, params) {
+    commit(FETCH_START);
+    commit(SET_ERROR, "");
+    return await graphqlClient
+      .query({
+        query: gql`
+          query Characters(
+            $page: Int!
+            $name: String!
+            $status: String!
+            $gender: String!
+          ) {
+            characters(
+              page: $page
+              filter: { name: $name, status: $status, gender: $gender }
+            ) {
+              results {
+                name
+              }
+            }
+          }
+        `,
+        variables: {
+          page: params.page,
+          name: params.name,
+          status: params.status,
+          gender: params.gender,
+        },
+      })
+      .then(({ data }) => {
+        commit(SET_CHARACTER_NAMES, data.characters);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  },
 };
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
@@ -172,6 +217,10 @@ const mutations = {
     state.charactersCount = characterList.info.count;
     state.pageCount = Math.floor(state.charactersCount / 20) + 1;
     state.characterList = characterList.results;
+    state.isLoading = false;
+  },
+  [SET_CHARACTER_NAMES](state, characterNames) {
+    state.characterNames = characterNames.results;
     state.isLoading = false;
   },
   [SET_CHARACTER](state, character) {
