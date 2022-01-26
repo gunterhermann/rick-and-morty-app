@@ -37,6 +37,7 @@
 <script>
 import CharacterDialog from "./CharacterDialog";
 import { FETCH_CHARACTER } from "@/store/actions.type";
+import { SET_CHARACTER } from "@/store/mutations.type";
 import { mapGetters } from "vuex";
 
 export default {
@@ -58,6 +59,13 @@ export default {
       this.$store.dispatch(FETCH_CHARACTER, {
         id: id,
       });
+    },
+  },
+  watch: {
+    isDialog(val) {
+      if (val === false) {
+        this.$store.commit(SET_CHARACTER, []);
+      }
     },
   },
 };

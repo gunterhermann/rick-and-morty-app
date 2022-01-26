@@ -94,7 +94,6 @@ export default {
       selectedStatus: "",
       selectedName: "",
       search: null,
-      isShown: false,
     };
   },
   computed: {
@@ -138,7 +137,6 @@ export default {
         gender: this.selectedGender,
         status: this.selectedStatus,
       });
-      // this.$store.commit(SET_CHARACTER_NAMES, []);
     },
     querySelections(name) {
       this.$store.dispatch(FETCH_CHARACTER_NAMES, {
