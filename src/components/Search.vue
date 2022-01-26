@@ -2,19 +2,6 @@
   <v-container fluid>
     <v-row justify="center" align="center" class="ma-0 pa-0">
       <v-col class="d-flex my-0 py-0" cols="6" lg="3" md="3" sm="3">
-        <!-- <v-text-field
-          v-model="selectedName"
-          label="Search Character"
-          outlined
-          dark
-          single-line
-          dense
-          min-width="50"
-          clearable
-          append-outer-icon="mdi-magnify"
-          @click:append-outer="queryCharacterList()"
-          @keydown.enter.prevent="queryCharacterList()"
-        ></v-text-field> -->
         <v-combobox
           v-model="selectedName"
           :items.sync="characterNames"
@@ -58,6 +45,7 @@
           dense
           dark
           outlined
+          @keydown.enter="queryCharacterList()"
         ></v-select>
       </v-col>
 
@@ -69,6 +57,7 @@
           dense
           dark
           outlined
+          @keydown.enter="queryCharacterList()"
         ></v-select>
       </v-col>
     </v-row>
