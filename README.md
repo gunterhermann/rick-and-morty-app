@@ -34,4 +34,4 @@ npm run lint
 
 Rick and Morty is created by Justin Roiland and Dan Harmon for [Adult Swim](https://www.adultswim.com/). The data and images are used without claim of ownership and belong to their respective owners.
 
-This API is open source and uses a BSD license.
+The [Rick and Morty API](https://rickandmortyapi.com/) is open source and uses a BSD license.
