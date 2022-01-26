@@ -30,8 +30,12 @@
           label="Search Character"
           clearable
           @keydown.enter="queryCharacterList()"
+          :menu-props="{
+            closeOnContentClick: true,
+            closeOnClick: true,
+          }"
           @click:clear="resetNameSelection()"
-          @change="queryCharacterList()"
+          @click="queryCharacterList()"
           class="mb-3"
         ></v-combobox>
       </v-col>
@@ -80,7 +84,7 @@
       <h2 v-if="error === ''" class="white--text">
         {{ charactersCount }} characters are listed!
       </h2>
-      <h2 v-else class="white--text">An error occurred: {{ error.message }}</h2>
+      <h2 v-else class="white--text">{{ getErrorMessage() }}</h2>
     </v-row>
   </v-container>
 </template>
@@ -101,6 +105,7 @@ export default {
       selectedStatus: "",
       selectedName: "",
       search: null,
+      isShown: false,
     };
   },
   computed: {
@@ -121,6 +126,13 @@ export default {
       this.selectedName = "";
       this.$store.commit(SET_CHARACTER_NAMES, []);
     },
+    getErrorMessage() {
+      if (this.error.message === "GraphQL error: 404: Not Found") {
+        return "No results found!";
+      } else {
+        return "An error occurred: " + this.error.message;
+      }
+    },
     resetSelection() {
       this.selectedGender = "";
       this.selectedStatus = "";
@@ -137,6 +149,7 @@ export default {
         gender: this.selectedGender,
         status: this.selectedStatus,
       });
+      // this.$store.commit(SET_CHARACTER_NAMES, []);
     },
     querySelections(name) {
       this.$store.dispatch(FETCH_CHARACTER_NAMES, {
@@ -149,7 +162,7 @@ export default {
   },
   watch: {
     search(val) {
-      if (val != null && val !== this.selectedName) {
+      if (val != null && val.length > 2 && val !== this.selectedName) {
         this.querySelections(val);
       } else {
         this.resetNameSelection();

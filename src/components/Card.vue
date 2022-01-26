@@ -3,7 +3,7 @@
     <v-hover v-slot="{ hover }" open-delay="100">
       <v-card
         class="mx-auto"
-        width="250"
+        width="225"
         dark
         color="rgba(0,47,101,1)"
         :elevation="hover ? 12 : 2"
@@ -13,7 +13,7 @@
           queryCharacter(character.id);
         "
       >
-        <v-img :src="character.image" height="250" contain></v-img>
+        <v-img :src="character.image" height="225" contain></v-img>
         <v-card-title>{{ character.name }}</v-card-title>
         <v-card-subtitle>
           <v-chip

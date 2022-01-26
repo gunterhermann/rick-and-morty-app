@@ -3,7 +3,7 @@
     <Search />
 
     <v-container fluid>
-      <template v-if="error === ''">
+      <template v-if="error === '' && characterList.length !== 0">
         <v-data-iterator
           :items="characterList"
           item-key="id"
@@ -22,7 +22,7 @@
             >
               <v-card
                 flat
-                min-width="250"
+                min-width="225"
                 style="background-color: transparent"
               >
                 <Card v-bind:character="character"> </Card>

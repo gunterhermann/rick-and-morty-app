@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <template v-if="isLoading === false">
+    <template v-if="isLoading === false && character.length != 0">
       <v-card class="text-center" min-width="200">
         <v-img gradient="to bottom, rgba(0,47,101,1), rgba(0,47,101,.6)">
           <v-avatar size="300" class="mt-3">

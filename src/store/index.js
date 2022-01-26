@@ -114,6 +114,7 @@ const actions = {
         commit(SET_CHARACTER, data.character);
       })
       .catch((error) => {
+        commit(SET_CHARACTER, []);
         commit(SET_ERROR, error);
       });
   },
@@ -136,6 +137,7 @@ const actions = {
             ) {
               info {
                 count
+                pages
               }
               results {
                 id
@@ -155,10 +157,17 @@ const actions = {
         },
       })
       .then(({ data }) => {
-        commit(SET_CHARACTER_LIST, data.characters);
-        commit(SET_SEARCH_PARAMS, params);
+        if ("errors" in data) {
+          commit(RESET_COUNTS);
+          commit(SET_CHARACTER_LIST, []);
+          commit(SET_ERROR, data.errors);
+        } else {
+          commit(SET_CHARACTER_LIST, data.characters);
+          commit(SET_SEARCH_PARAMS, params);
+        }
       })
       .catch((error) => {
+        commit(SET_CHARACTER_LIST, []);
         commit(SET_ERROR, error);
       });
   },
@@ -192,9 +201,14 @@ const actions = {
         },
       })
       .then(({ data }) => {
-        commit(SET_CHARACTER_NAMES, data.characters);
+        if ("errors" in data) {
+          commit(SET_CHARACTER_NAMES, []);
+        } else {
+          commit(SET_CHARACTER_NAMES, data.characters);
+        }
       })
       .catch((error) => {
+        commit(SET_CHARACTER_NAMES, []);
         throw new Error(error);
       });
   },
@@ -214,13 +228,23 @@ const mutations = {
     state.isLoading = false;
   },
   [SET_CHARACTER_LIST](state, characterList) {
-    state.charactersCount = characterList.info.count;
-    state.pageCount = Math.floor(state.charactersCount / 20) + 1;
-    state.characterList = characterList.results;
+    if (characterList.length !== 0) {
+      state.charactersCount = characterList.info.count;
+      state.pageCount = characterList.info.pages;
+      state.characterList = characterList.results;
+    } else {
+      state.charactersCount = 0;
+      state.pageCount = 0;
+      state.characterList = [];
+    }
     state.isLoading = false;
   },
   [SET_CHARACTER_NAMES](state, characterNames) {
-    state.characterNames = characterNames.results;
+    if (characterNames.length !== 0) {
+      state.characterNames = characterNames.results;
+    } else {
+      state.characterNames = [];
+    }
     state.isLoading = false;
   },
   [SET_CHARACTER](state, character) {
