@@ -12,7 +12,6 @@
           dense
           dark
           no-filter
-          hide-no-data
           hide-details
           label="Search Character"
           clearable
@@ -22,9 +21,18 @@
             closeOnClick: true,
           }"
           @click:clear="resetNameSelection()"
-          @click="queryCharacterList()"
+          @change="$refs['autocomplete'].isMenuActive = false"
           class="mb-3"
-        ></v-combobox>
+          ref="autocomplete"
+        >
+          <template v-slot:no-data>
+            <v-list-item>
+              <v-list-item-title>
+                Search for Your Favorite Character
+              </v-list-item-title>
+            </v-list-item>
+          </template></v-combobox
+        >
       </v-col>
       <v-col class="d-flex py-0 mb-3" cols="6" lg="3" md="3" sm="3">
         <v-btn rounded color="green" dark @click="queryCharacterList()">
@@ -42,10 +50,14 @@
           v-model="selectedStatus"
           :items="getKeys(statusSelection)"
           label="Status"
+          outlined
+          single-line
           dense
           dark
-          outlined
+          no-filter
+          hide-details
           @keydown.enter="queryCharacterList()"
+          ref="status"
         ></v-select>
       </v-col>
 
@@ -54,10 +66,14 @@
           v-model="selectedGender"
           :items="getKeys(genderSelection)"
           label="Gender"
+          outlined
+          single-line
           dense
           dark
-          outlined
+          no-filter
+          hide-details
           @keydown.enter="queryCharacterList()"
+          ref="gender"
         ></v-select>
       </v-col>
     </v-row>
